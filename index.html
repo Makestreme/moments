@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moments - firmware for the reTerminal Sticky</title>
+<meta name="description" content="Moments: free, context-aware firmware for the Seeed reTerminal Sticky. Install from your browser.">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+</head>
+<body>
+
+<header>
+  <div class="in">
+    <b>Moments</b>
+    <nav>
+      <a href="#install">Install</a>
+      <a href="#setup">First setup</a>
+      <a href="#controls">Controls</a>
+      <a href="#console">Console</a>
+      <a href="#help">Troubleshooting</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<h1>Moments</h1>
+<p class="lead">Free, open firmware for the Seeed reTerminal Sticky. Put it on your desk, your bedside or your fridge, and it shows what fits that place and time of day. Everything runs on the device. No cloud, no subscription.</p>
+
+<!-- Set data-youtube to your video ID (the part after "watch?v="). -->
+<div class="video" data-youtube="">
+  <div class="ph-text">Demo video coming soon</div>
+</div>
+
+<figure>
+  <img src="img/hero.jpg" alt="Moments running on a reTerminal Sticky" onerror="this.parentNode.classList.add('empty');this.remove()">
+</figure>
+
+<!-- ===================================================== -->
+<section id="install">
+<h2>1. Install</h2>
+<p>Install straight from this page. You need <b>Chrome or Edge on a computer</b> (Web Serial) and a USB-C <b>data</b> cable.</p>
+
+<div class="card">
+  <ol>
+    <li>Plug the Sticky into your computer. USB power turns it on.</li>
+    <li>Click <b>Install Moments</b> and pick the serial port (usually "USB Single Serial" or "CH343").</li>
+    <li>When asked to <b>erase the device</b>:
+      <ul>
+        <li><b>First install:</b> tick it.</li>
+        <li><b>Updating Moments:</b> leave it unticked. Your settings, Wi-Fi and photos are kept.</li>
+      </ul>
+    </li>
+    <li>Wait for it to finish. The Sticky restarts and shows the <b>Moments setup</b> screen.</li>
+  </ol>
+  <div class="row">
+    <esp-web-install-button manifest="manifest.json">
+      <button slot="activate">Install Moments</button>
+      <span slot="unsupported">Your browser can't do this. Use Chrome or Edge on a computer.</span>
+      <span slot="not-allowed">This page must be opened over https.</span>
+    </esp-web-install-button>
+    <a class="btn ghost" href="firmware/moments.bin" download>Download moments.bin</a>
+  </div>
+  <p class="small mut">Version 1.0.0. No port shown on Windows? Install the <a href="https://www.wch-ic.com/downloads/CH343SER_EXE.html">WCH CH343 driver</a> and try again.</p>
+</div>
+
+<p class="small mut">You can also update without a cable. Open the console, go to <b>System › Firmware</b>, and upload <code>moments.bin</code>. Your settings are kept.</p>
+</section>
+
+<!-- ===================================================== -->
+<section id="setup">
+<h2>2. First setup</h2>
+<p>On first start the screen shows two QR codes and a 6-digit PIN.</p>
+
+<figure>
+  <img src="img/setup.jpg" alt="Moments setup screen with QR codes and PIN" onerror="this.parentNode.classList.add('empty');this.remove()">
+</figure>
+
+<ol>
+  <li><b>Join the Sticky's Wi-Fi.</b> Scan the first QR code, or connect to <code>Moments-XXXX</code> with the password shown.</li>
+  <li><b>Open the console.</b> Scan the second QR code or go to <code>http://192.168.4.1</code>. Enter the PIN from the screen.</li>
+  <li><b>Connections:</b> add your home Wi-Fi, search for your city (location and time zone), and set your name and units. Click <b>Save</b>.</li>
+  <li><b>Home › Orientation:</b> calibrate once. Press <b>Show step 1</b>, hold the Sticky so the text reads upright, keep it still, and press <b>Step 1</b>. Then do the same for step 2.</li>
+  <li>Press <b>Leave setup mode</b>. The Sticky joins your Wi-Fi and starts showing Moments.</li>
+</ol>
+<div class="note">Wi-Fi passwords and API keys save instantly when you press their own Save button. Everything else is saved with the <b>Save</b> bar at the bottom of the console.</div>
+</section>
+
+<!-- ===================================================== -->
+<section id="moments">
+<h2>3. How Moments works</h2>
+<p>A <b>Moment</b> is a rule: <i>when</i> (where the Sticky is placed, time of day, weekday, conditions) → <i>what</i> it shows or does. Where it is placed is read from the way it hangs or stands, so it needs no setup per place.</p>
+
+<h3>The four poses</h3>
+<table>
+  <tr><th>Pose</th><th>How</th><th>Default Moment</th></tr>
+  <tr><td>Portrait · Stand</td><td>On a 45° stand, tall</td><td>Bedside: Good Morning / Bedside / Wind Down (by time of day)</td></tr>
+  <tr><td>Landscape · Stand</td><td>On a 45° stand, wide</td><td>At the Desk (agenda, stocks, weather)</td></tr>
+  <tr><td>Portrait · Vertical</td><td>Stuck flat to a wall or fridge, tall</td><td>Kitchen (Chef app)</td></tr>
+  <tr><td>Landscape · Vertical</td><td>Stuck flat to a wall or door, wide</td><td>Get Ready (outfit + forecast)</td></tr>
+</table>
+<p class="small mut">Upside down counts as the same pose, and the screen rotates to stay upright. Lying flat or held in the hand counts as no pose, so the screen stays as it is. A pose is accepted only once the Sticky is still for about a second.</p>
+
+<figure>
+  <img src="img/poses.jpg" alt="The Sticky in its four poses" onerror="this.parentNode.classList.add('empty');this.remove()">
+</figure>
+
+<h3>Three kinds of Moments</h3>
+<ul>
+  <li><b>Screen Moment</b> shows a screen of widgets (clock, weather, calendar, news, stocks, quotes…).</li>
+  <li><b>App Moment</b> opens an interactive app: Chef, Lists, Timer, Gallery or Guardian.</li>
+  <li><b>Automation</b> fires once on an event (time, temperature, humidity, battery, motion, owner leaves or arrives…) and sends a notification, plays a sound, or shows a screen for a few minutes.</li>
+</ul>
+<p>Screen and App Moments are checked from top to bottom, and the <b>first match wins</b>. If nothing matches, the <b>Glance</b> screen is shown. Default dayparts: Morning 05–11, Day 11–17, Evening 17–21, Night 21–05. All of these can be changed.</p>
+</section>
+
+<!-- ===================================================== -->
+<section id="controls">
+<h2>4. Controls</h2>
+<p>Touch and buttons are for <i>using</i> the Sticky. All editing happens in the web console.</p>
+
+<h3>Buttons</h3>
+<table>
+  <tr><th>Button</th><th>What it does</th></tr>
+  <tr><td><kbd>AI</kbd> press</td><td>Refresh now. In an app: back. In setup mode: leave setup mode. When off: power on.</td></tr>
+  <tr><td><kbd>AI</kbd> hold 3 s</td><td>Setup mode: shows the console address, QR code and PIN. Hold again to leave.</td></tr>
+  <tr><td><kbd>AI</kbd> hold 8 s</td><td>Power off. Press <kbd>AI</kbd> to turn it back on.</td></tr>
+  <tr><td><kbd>Up</kbd> / <kbd>Down</kbd></td><td>Previous / next screen. In apps: previous / next page or step.</td></tr>
+  <tr><td><kbd>Up</kbd> + <kbd>Down</kbd> while powering on</td><td>Service screen (see below).</td></tr>
+</table>
+
+<h3>Touch on screens</h3>
+<table>
+  <tr><th>Gesture</th><th>What it does</th></tr>
+  <tr><td>Tap</td><td>Refresh now. Tap the outfit suggestion to see another outfit.</td></tr>
+  <tr><td>Swipe</td><td>Browse your other screens of the same orientation. It goes back to the normal Moment after 10 minutes or when you move the Sticky to another pose.</td></tr>
+</table>
+
+<h3>Apps</h3>
+<table>
+  <tr><th>App</th><th>On the device</th></tr>
+  <tr><td>Chef</td><td>Tap a recipe → see what you have and what's missing → <b>Add missing</b> to your shopping list, <b>Save</b> as favorite, or open the <b>Steps</b>. Swipe or <kbd>Up</kbd>/<kbd>Down</kbd> through steps; tap a step's timer to start it. <b>New ideas</b> asks the AI again; <b>Favorites</b> shows saved recipes. <kbd>AI</kbd> goes back.</td></tr>
+  <tr><td>Lists</td><td>Tap an item to tick it. <b>Clear ticked</b> removes done items. Swipe left/right to switch lists, <kbd>Up</kbd>/<kbd>Down</kbd> for more items.</td></tr>
+  <tr><td>Timer</td><td>Tap a preset to start a focus timer. Pause, Resume, Stop. Take a Break when it ends. The buzzer sounds when time is up.</td></tr>
+  <tr><td>Gallery</td><td>Tap, swipe or <kbd>Up</kbd>/<kbd>Down</kbd> for the next / previous photo. It changes on its own at the interval you set.</td></tr>
+  <tr><td>Guardian</td><td>No touch controls, by design. It disarms when your phone or tag is found, or from the console.</td></tr>
+</table>
+
+<figure>
+  <img src="img/apps.jpg" alt="Chef app showing a recipe step" onerror="this.parentNode.classList.add('empty');this.remove()">
+</figure>
+
+<h3>Service screen</h3>
+<p>Hold <kbd>Up</kbd> + <kbd>Down</kbd> while turning the Sticky on (or while pressing the reset pinhole). It works without touch or Wi-Fi. Use <kbd>Up</kbd>/<kbd>Down</kbd> to choose and <kbd>AI</kbd> to run.</p>
+<ul>
+  <li><b>Diagnostics</b>: battery, temperature sensor, motion sensor, pose, clock, touch and storage. Touch the screen to test touch.</li>
+  <li><b>Setup mode</b>: opens the console.</li>
+  <li><b>Orientation step 1 / 2</b>: the same calibration as in the console.</li>
+  <li><b>Buzzer test</b>.</li>
+  <li><b>Factory reset</b>: press <kbd>AI</kbd> twice within 5 s. This erases all settings, data and keys.</li>
+</ul>
+</section>
+
+<!-- ===================================================== -->
+<section id="console">
+<h2>5. The web console</h2>
+<p>All customization happens here. To open it:</p>
+<ul>
+  <li><b>On battery:</b> hold <kbd>AI</kbd> for 3 s. The screen shows the address and PIN. Setup mode closes after 10 minutes without use, or when you press <kbd>AI</kbd>.</li>
+  <li><b>On USB power:</b> the console is always reachable on your Wi-Fi.</li>
+</ul>
+<p>Go to <code>http://moments.local</code>, or to the IP address shown on the screen if that doesn't load. Log in with the PIN from the screen.</p>
+
+<figure>
+  <img src="img/console.jpg" alt="The Moments web console" onerror="this.parentNode.classList.add('empty');this.remove()">
+</figure>
+
+<table>
+  <tr><th>Page</th><th>What's there</th></tr>
+  <tr><td>Home</td><td>Live status (pose, active Moment, battery, sensors). <b>Why this Moment?</b> explains which rule matched. Quick actions: refresh, test sound, test notification, leave setup mode. Orientation calibration and recent events.</td></tr>
+  <tr><td>Moments</td><td>Screen and App Moments (order = priority), Automations (with a <b>Test</b> button) and Dayparts. A daypart can start at sunrise or sunset ± minutes.</td></tr>
+  <tr><td>Screens</td><td>Grid designer: 6×10 cells in portrait, 10×6 in landscape. Drag to move, drag the corner to resize, tap a widget for its settings. The preview is drawn by the device itself. Start from a template.</td></tr>
+  <tr><td>Apps</td><td>Chef (diet, allergies, servings, cook time), Timer presets, Gallery interval, Guardian (owner devices, arming poses, siren).</td></tr>
+  <tr><td>Content</td><td>Pantry, Wardrobe (for outfit ideas), Lists, Notes, Quotes and Images. Photos are resized and dithered in your browser before upload.</td></tr>
+  <tr><td>Connections</td><td>Wi-Fi (up to 3), location and time zone, profile and wake times, calendars (secret iCal/ICS link), news feeds, stocks (free Twelve Data key), AI (any OpenAI-compatible service; Groq's free tier is the default), ntfy or webhook notifications, owner devices.</td></tr>
+  <tr><td>System</td><td>Power profile (Eco / Balanced / Live), charge limit, display, sound and quiet hours, sensor offsets and pose tuning, touch mapping, firmware update, backup and restore, reboot and factory reset.</td></tr>
+</table>
+
+<div class="note"><b>Optional extras.</b> Weather, news, sunrise and quotes work with no keys. AI features (Chef, outfit ideas, news summaries) need a free AI key. The stock widgets need a free Twelve Data key. Without an AI key, Chef shows saved favorites and outfits use simple rules.</div>
+<div class="note"><b>Guardian</b> notices when the door it's stuck to is opened while your phone is away. It is a door notifier, not a security system.</div>
+</section>
+
+<!-- ===================================================== -->
+<section id="help">
+<h2>6. Troubleshooting</h2>
+<table>
+  <tr><th>Problem</th><th>Fix</th></tr>
+  <tr><td>Installer finds no port</td><td>Use a data cable (not charge-only), install the CH343 driver, and close any other app using the port (such as the Arduino Serial Monitor).</td></tr>
+  <tr><td><code>moments.local</code> doesn't open</td><td>Use the IP address shown on the setup screen. Some networks and Android phones don't support <code>.local</code>.</td></tr>
+  <tr><td>Console doesn't load</td><td>On battery the console runs only in setup mode. Hold <kbd>AI</kbd> for 3 s first.</td></tr>
+  <tr><td>Pose never changes</td><td>Calibrate orientation (Home › Orientation). If it still won't settle, raise <b>System › Sensors & poses › Stillness threshold</b> a little.</td></tr>
+  <tr><td>Taps land in the wrong place</td><td>Change <b>System › Touch mapping</b>, then Save.</td></tr>
+  <tr><td>Ghosting after sleep</td><td>Turn off <b>System › Display › Fast partial refresh after sleep</b>, or lower "full clean refresh every N".</td></tr>
+  <tr><td>Photos look inverted</td><td>Turn on <b>System › Display › Swap the two gray levels</b>.</td></tr>
+  <tr><td>Room temperature reads high</td><td>The board warms itself, mostly while charging. Set a <b>temperature offset</b> in System.</td></tr>
+  <tr><td>Start over</td><td>Use the service screen › Factory reset, or reinstall with "erase" ticked.</td></tr>
+</table>
+</section>
+
+</main>
+
+<footer>
+  Moments v1.0.0 · Unofficial firmware for the Seeed reTerminal Sticky. Use at your own risk. ·
+  <!-- Replace with your repository URL. -->
+  <a href="https://github.com/">Source on GitHub</a>
+</footer>
+
+<script>
+  const v = document.querySelector('.video'), id = v.dataset.youtube.trim();
+  if (id) v.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id) +
+    '" title="Moments demo" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+</script>
+</body>
+</html>
