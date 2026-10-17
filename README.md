@@ -2,7 +2,7 @@
 
 Free, open firmware for the **Seeed reTerminal Sticky** (ESP32-S3, 3.97" e-paper). The Sticky shows the right screen for where it is placed and the time of day. Everything runs on the device, with no cloud and no subscription.
 
-**Install and guide:** https://YOUR-USERNAME.github.io/YOUR-REPO/
+**Install and guide:** [Moments website](https://makestreme.github.io/moments/)
 
 ## Install
 
